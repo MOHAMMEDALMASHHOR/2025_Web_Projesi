@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Mohammed Mashhor - Task Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        .profile-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .language-proficiency {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .proficiency-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #8B3A3A;
+            opacity: 0.3;
+        }
+
+        .proficiency-dot.filled {
+            opacity: 1;
+        }
+
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .timeline-item {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #8B3A3A;
+        }
+
+        .cv-button {
+            display: inline-block;
+            background: #8B3A3A;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .cv-button:hover {
+            background: #6B2D2D;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-section">
+        <div class="profile-header">
+            <img src="{{ url_for('static', filename='MYPHOTO.JPG') }}" alt="Mohammed Mashhor" class="profile-image">
+            <div class="profile-info">
+                <h1>Mohammed Mashhor Mohammed Almashhor</h1>
+                <p>📧 mohammed.almashhor2020@gmail.com</p>
+                <p>📞 +905316995603</p>
+                <p>📍 Hancerli Mahallesi, Postane Sokak, No:3, 55020 Ilkadim/Samsun</p>
+               <a href="{{ url_for('static', filename='CV_2022.pdf') }}" download="Mohammed_Mashhor_CV.pdf" class="cv-button">
+    Download CV
+</a>
+
+</a>
+
+                    View Full CV
+                </a>
+            </div>
+        </div>
+
+        <div class="grid-section">
+            <div class="section-card">
+                <h2>Languages</h2>
+                <div class="language-proficiency">
+                    <span>Arabic</span>
+                    <div style="flex: 1; display: flex; gap: 4px;">
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                    </div>
+                </div>
+                <div class="language-proficiency">
+                    <span>English</span>
+                    <div style="flex: 1; display: flex; gap: 4px;">
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                    </div>
+                </div>
+                <div class="language-proficiency">
+                    <span>Turkish</span>
+                    <div style="flex: 1; display: flex; gap: 4px;">
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                    </div>
+                </div>
+                <div class="language-proficiency">
+                    <span>French</span>
+                    <div style="flex: 1; display: flex; gap: 4px;">
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot filled"></span>
+                        <span class="proficiency-dot"></span>
+                        <span class="proficiency-dot"></span>
+                        <span class="proficiency-dot"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2>Skills</h2>
+                <div class="skills-list">
+                    <div class="skill-item">Self-learning</div>
+                    <div class="skill-item">Analytical and Problem-Solving</div>
+                    <div class="skill-item">Adaptability and flexibility</div>
+                    <div class="skill-item">Teamwork and collaboration</div>
+                    <div class="skill-item">Communication skills</div>
+                    <div class="skill-item">Problem-solving and critical thinking</div>
+                    <div class="skill-item">Creativity and innovation</div>
+                    <div class="skill-item">Leadership and management skills</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Education</h2>
+            <div class="timeline-item">
+                <h3>Samsun University</h3>
+                <p>Currently enrolled in:</p>
+                <ul>
+                    <li>Algorithm Design</li>
+                    <li>Introduction to Software Engineering</li>
+                    <li>Introduction to Computer Science</li>
+                </ul>
+            </div>
+            <div class="timeline-item">
+                <h3>Seiyun Model Secondary School</h3>
+                <p>High School Certificate (Scientific Section)</p>
+                <p>Grade: 98.45% (Distinction)</p>
+                <p>Graduation: 2019/2020</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Professional Experience</h2>
+            <div class="timeline-item">
+                <h3>English Teacher for Beginners</h3>
+                <p>Dar Al-Mustafa for Islamic Studies in Tarim (2020 - 2021)</p>
+                <p>Teaching English to beginners and preparing curricula and educational materials.</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Tutor</h3>
+                <p>2018 - Present</p>
+                <p>Teaching required subjects and preparing curricula and educational materials</p>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2>Volunteer Work</h2>
+            <div class="timeline-item">
+                <h3>Yemeni Students Union in Turkey</h3>
+                <p>2022 - 2023</p>
+                <p>Contributed 640 volunteering hours helping Yemeni students with Turkish scholarship registration</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Model High School Scouts</h3>
+                <p>2019 - 2021</p>
+                <p>Led the Second Troop, organizing events and mentoring team members</p>
+            </div>
+            <div class="timeline-item">
+                <h3>Other Initiatives</h3>
+                <ul>
+                    <li>Participated in "Tree Planting Initiative" for elementary schools</li>
+                    <li>Contributed to improving elementary school students' performance</li>
+                    <li>Participated in "Bader" volunteer initiative at Al-Nayef Institute</li>
+                    <li>Assisted students in learning Turkish and Arabic through the Busu app</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
