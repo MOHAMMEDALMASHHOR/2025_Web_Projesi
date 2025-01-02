@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Statistics - Task Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Task Statistics</h1>
+        <div class="dashboard">
+            <div class="stat-card">
+                <h3>Total Tasks</h3>
+                <p>{{ total_tasks }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Completed Tasks</h3>
+                <p>{{ completed_tasks }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Tasks</h3>
+                <p>{{ pending_tasks }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Productivity Rate</h3>
+                <p>{{ "%.2f"|format(productivity_rate) }}%</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="completionChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="priorityChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="categoryChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Completed vs Pending Tasks Pie Chart
+        var ctxCompletion = document.getElementById('completionChart').getContext('2d');
+        var completionChart = new Chart(ctxCompletion, {
+            type: 'pie',
+            data: {
+                labels: ['Completed', 'Pending'],
+                datasets: [{
+                    data: [{{ completed_tasks }}, {{ pending_tasks }}],
+                    backgroundColor: ['#36a2eb', '#ff6384']
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Completed vs Pending Tasks'
+                }
+            }
+        });
+
+        // Task Priority Distribution Bar Chart
+        var ctxPriority = document.getElementById('priorityChart').getContext('2d');
+        var priorityChart = new Chart(ctxPriority, {
+            type: 'bar',
+            data: {
+                labels: [{% for priority, count in priority_distribution %}'{{ priority }}',{% endfor %}],
+                datasets: [{
+                    label: 'Number of Tasks',
+                    data: [{% for priority, count in priority_distribution %}{{ count }},{% endfor %}],
+                    backgroundColor: '#4bc0c0'
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Task Priority Distribution'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Task Categories Doughnut Chart
+        var ctxCategory = document.getElementById('categoryChart').getContext('2d');
+        var categoryChart = new Chart(ctxCategory, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for category, count in category_distribution %}'{{ category }}',{% endfor %}],
+                datasets: [{
+                    data: [{% for category, count in category_distribution %}{{ count }},{% endfor %}],
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff']
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: 'Task Categories'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

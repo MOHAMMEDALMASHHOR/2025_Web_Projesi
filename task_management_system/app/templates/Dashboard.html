@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Task Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ current_user.name }}!</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.statistics') }}" target="_blank">Task Statistics</a></li>
+                <li><a href="{{ url_for('main.about') }}" target="_blank">About the Author</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+
+        <h2>Add New Task</h2>
+        <form id="addTaskForm" method="POST" action="{{ url_for('main.add_task') }}">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required title="Brief description of the task" data-tooltip="Enter a short, descriptive title for your task">
+                <small>Enter a brief title for your task</small>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" title="Details about the task" data-tooltip="Provide additional details about your task (optional)"></textarea>
+                <small>Provide additional details about your task (optional)</small>
+            </div>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <input type="text" id="category" name="category" required title="Category of the task" data-tooltip="Enter a category for your task (e.g., Work, Personal, Study)">
+                <small>Enter a category for your task (e.g., Work, Personal, Study)</small>
+            </div>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select id="priority" name="priority" required title="Priority level" data-tooltip="Select the importance level of your task">
+                    {% for priority in priorities %}
+                        <option value="{{ priority.id }}">{{ priority.priority_name }}</option>
+                    {% endfor %}
+                </select>
+                <small>Select the importance level of your task</small>
+            </div>
+            <div class="form-group">
+                <label for="due_date">Due Date:</label>
+                <input type="date" id="due_date" name="due_date" required title="Task deadline" data-tooltip="Select the deadline for your task">
+                <small>Select the deadline for your task</small>
+            </div>
+            <div class="form-group">
+                <label>Who will you do the task with?</label>
+                <div>
+                    <input type="radio" id="alone" name="collaboration" value="Alone" required>
+                    <label for="alone">Alone</label>
+                </div>
+                <div>
+                    <input type="radio" id="family" name="collaboration" value="With Family">
+                    <label for="family">With Family</label>
+                </div>
+                <div>
+                    <input type="radio" id="friends" name="collaboration" value="With Friends">
+                    <label for="friends">With Friends</label>
+                </div>
+                <small>Choose who you'll collaborate with on this task</small>
+            </div>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <h2>Your Tasks</h2>
+        <div class="task-filters">
+            <label for="filter-category">Filter by Category:</label>
+            <select id="filter-category">
+                <option value="">All Categories</option>
+                <!-- JavaScript will populate this -->
+            </select>
+
+            <label for="filter-priority">Filter by Priority:</label>
+            <select id="filter-priority">
+                <option value="">All Priorities</option>
+                {% for priority in priorities %}
+                    <option value="{{ priority.priority_name }}">{{ priority.priority_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="filter-status">Filter by Status:</label>
+            <select id="filter-status">
+                <option value="">All Statuses</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+            </select>
+        </div>
+
+        <ul id="task-list">
+            {% for task in tasks %}
+                <li class="task-item" data-category="{{ task.category }}" data-priority="{{ task.priority.priority_name }}" data-status="{{ 'completed' if task.is_completed else 'pending' }}">
+                    <div class="task-header">
+                        <h3>{{ task.title }}</h3>
+                        <input type="checkbox" class="task-completion-toggle" data-task-id="{{ task.id }}" {% if task.is_completed %}checked{% endif %}>
+                    </div>
+                    <p>{{ task.description }}</p>
+                    <p>Category: {{ task.category }}</p>
+                    <p>Priority: {{ task.priority.priority_name }}</p>
+                    <p>Due Date: {{ task.due_date.strftime('%Y-%m-%d') }}</p>
+                    <p>Collaboration: {{ task.collaboration }}</p>
+                    <p class="task-status">Status: <span>{{ 'Completed' if task.is_completed else 'Pending' }}</span></p>
+                    <a href="{{ url_for('main.delete_task', task_id=task.id) }}" class="delete-task">Delete Task</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
